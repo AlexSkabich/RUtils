@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+#define DL_LIST_IMPLEMENTATION
+#include "dl_list.h"
+
+int main(void)
+{
+  dl_List my_list = {};
+  dl_init(&my_list);
+
+  const int qu = 128;
+  Node *node_array[qu];
+  const char* string = "Malcolm in the middle";
+  const char* string1 = "lolkekw";
+
+  for(int i = 0; i<qu; ++i)
+    {
+      if(i == 53)
+	{
+	  node_array[i] = createNode(string1);
+	}
+      else
+	{
+	  node_array[i] = createNode(string);
+	}
+    }
+  addNode(&my_list, my_list.begin, node_array[0]);
+  for(int i = 1; i<qu; ++i)
+    {
+      addNode(&my_list, node_array[i-1], node_array[i]);
+    }
+  //traversing_forward(my_list);
+  searchNode(my_list, string1);
+
+
+  return(0);
+}
