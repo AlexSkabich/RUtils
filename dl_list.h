@@ -7,9 +7,7 @@
 
 
 #define MALLOC(size) malloc(size)
-// NOTE: doing macro now, 'cos we may provide different
-// backends or even our own memory allocator
-
+// TODO(RT): reimplement allocator or provide many backends
 
 typedef enum
 {
@@ -34,7 +32,8 @@ struct dl_List
 };
 typedef struct dl_List dl_List;
 
-void dl_init(dl_List* List);
+void dl_init(dl_List *List);
+void dl_clear(dl_List *List);
 Node* createNode(const char* data);
 void addNode(dl_List *List, Node *prevNode, Node *new_node);
 void deleteNode(Node *del_node);
@@ -47,7 +46,7 @@ void traversing_backward(dl_List List);
 void dl_init(dl_List* List)
 {
   List->begin = (Node*)MALLOC(sizeof(Node));
-  List->end   = (Node*)MALLOC(sizeof(Node));
+  List->end = (Node*)MALLOC(sizeof(Node));
   List->begin->data = NULL;
   List->end->data   = NULL;
 
@@ -73,7 +72,11 @@ Node* createNode(const char* data)
 
 void addNode(dl_List *List, Node *prevNode, Node *new_node)
 {
-  if(prevNode->type != IN_LIST || new_node->type != OUT_OF_LIST) return;
+  if(prevNode->type != IN_LIST || new_node->type != OUT_OF_LIST)
+    {
+      printf("prevNode should be in list and new_node out of list\n");
+      return;
+    }
   new_node->prev = prevNode;
   new_node->type = IN_LIST;
   prevNode->next = new_node;
@@ -87,6 +90,15 @@ void deleteNode(Node *del_node)
   del_node->prev->next = del_node->next;
   del_node->next->prev = del_node->prev;
   free(del_node);
+}
+
+void dl_clear(dl_List *List)
+{
+  while(List->begin->next != NULL && List->begin->next->data != NULL)
+    {
+      free(List->begin->next);
+      List->begin->next = List->begin->next->next;
+    }
 }
 
 void traversing_forward(dl_List List)

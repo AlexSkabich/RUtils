@@ -31,7 +31,7 @@ int main(void)
     }
   //traversing_forward(my_list);
   searchNode(my_list, string1);
-
+  dl_clear(&my_list);
 
   return(0);
 }
