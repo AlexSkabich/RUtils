@@ -17,6 +17,9 @@
 #define u64      uint64_t
 #define f32      float
 #define f64      double
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 
 #ifndef true
 #define true 1

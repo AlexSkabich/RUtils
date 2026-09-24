@@ -8,7 +8,6 @@
 
 
 
-
 #ifndef DEFAULT_REGIONS_QUANTITY
 #define DEFAULT_REGIONS_QUANTITY 64
 #endif

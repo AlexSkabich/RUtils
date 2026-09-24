@@ -13,13 +13,13 @@ typedef enum
 {
   OUT_OF_LIST,
   IN_LIST
-} condition;
+} NodeStatus;
 
 
 struct Node
 {
   char* data;
-  condition type;
+  NodeStatus type;
   struct Node *next;
   struct Node *prev;
 };
