@@ -6,4 +6,4 @@ Just some crappy collection of headers I wrote for my own purposes and use it li
 
 # misc.h
 - just a bunch of really useful macroses
-(maybe some data-structures later)
+(maybe some data-structures later, but i'm not sure)

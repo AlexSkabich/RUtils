@@ -9,7 +9,7 @@ int main(void)
   dl_init(&my_list);
 
   const int qu = 128;
-  Node *node_array[qu];
+  dlNode *node_array[qu];
   const char* string = "Malcolm in the middle";
   const char* string1 = "lolkekw";
 

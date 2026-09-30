@@ -1,0 +1,31 @@
+#ifndef _SINGLE_LINKED_LIST_
+#define _SINGLE_LINKED_LIST_
+#define _SLLIST_ _SINGLE_LINKED_LIST_
+
+
+struct slNode
+{
+  void *data;
+  struct lNode *next;
+};
+typedef struct lNode lNode;
+
+struct sl_list
+{
+  lNode Head;
+};
+typedef struct sl_list sl_list;
+
+_SLLIST_ internal void sllist_init(slNode Node);
+_SLLIST_ void sllist_addNode(slNode Node);
+_SLLIST_ void sllist_delNode(slNode Node);
+_SLLIST_ void sllist_searchNode(slNode Node);
+_SLLIST_ void sllist_traversary(slNode Node);
+
+#ifdef _LIST_IMPLEMENTATION_
+
+// implementations here
+
+
+#endif
+#endif

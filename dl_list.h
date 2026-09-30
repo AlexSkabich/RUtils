@@ -1,13 +1,14 @@
 #ifndef _DL_LIST_H_
 #define _DL_LIST_H_
 
+#define DLLIST_API_ _DL_LIST_H_
+
+
 #include <stdlib.h>
 #include <string.h>
+#include "misc.h"
 #include <stdint.h>
 
-
-#define MALLOC(size) malloc(size)
-// TODO(RT): reimplement allocator or provide many backends
 
 typedef enum
 {
@@ -16,37 +17,37 @@ typedef enum
 } NodeStatus;
 
 
-struct Node
+struct dlNode
 {
   char* data;
   NodeStatus type;
-  struct Node *next;
-  struct Node *prev;
+  struct dlNode *next;
+  struct dlNode *prev;
 };
-typedef struct Node Node;
+typedef struct dlNode dlNode;
 
 struct dl_List
 {
-  Node *begin;
-  Node *end;
+  dlNode *begin;
+  dlNode *end;
 };
 typedef struct dl_List dl_List;
 
-void dl_init(dl_List *List);
-void dl_clear(dl_List *List);
-Node* createNode(const char* data);
-void addNode(dl_List *List, Node *prevNode, Node *new_node);
-void deleteNode(Node *del_node);
-void traversing_forward(dl_List List);
-void traversing_backward(dl_List List);
+DLLIST_API_ internal void dl_init(dl_List *List);
+DLLIST_API_ void dl_clear(dl_List *List);
+DLLIST_API_ dlNode* createNode(const char* data);
+DLLIST_API_ void addNode(dl_List *List, dlNode *prevNode, dlNode *new_node);
+DLLIST_API_ void deleteNode(dlNode *del_node);
+DLLIST_API_ void traversing_forward(dl_List List);
+DLLIST_API_ void traversing_backward(dl_List List);
 
 
 #ifdef DL_LIST_IMPLEMENTATION
 
-void dl_init(dl_List* List)
+internal void dl_init(dl_List* List)
 {
-  List->begin = (Node*)MALLOC(sizeof(Node));
-  List->end = (Node*)MALLOC(sizeof(Node));
+  List->begin = (dlNode*)malloc(sizeof(dlNode));
+  List->end = (dlNode*)malloc(sizeof(dlNode));
   List->begin->data = NULL;
   List->end->data   = NULL;
 
@@ -59,18 +60,18 @@ void dl_init(dl_List* List)
   List->end->next = NULL;
 }
 
-Node* createNode(const char* data)
+dlNode* createNode(const char* data)
 {
-  Node* new_node;
-  new_node = (Node*)MALLOC(sizeof(Node));
+  dlNode* new_node;
+  new_node = (dlNode*)malloc(sizeof(dlNode));
   const size_t n = strlen(data);
-  new_node->data = (char*)MALLOC(n);
+  new_node->data = (char*)malloc(n);
   new_node->type = OUT_OF_LIST;
   memcpy(new_node->data, data, n);
   return new_node;
 }
 
-void addNode(dl_List *List, Node *prevNode, Node *new_node)
+void addNode(dl_List *List, dlNode *prevNode, dlNode *new_node)
 {
   if(prevNode->type != IN_LIST || new_node->type != OUT_OF_LIST)
     {
@@ -84,7 +85,7 @@ void addNode(dl_List *List, Node *prevNode, Node *new_node)
   List->end->prev = new_node;
 }
 
-void deleteNode(Node *del_node)
+void deleteNode(dlNode *del_node)
 {
   // prevNode -=- del_node -=- nextNode
   del_node->prev->next = del_node->next;

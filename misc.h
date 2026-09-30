@@ -2,10 +2,25 @@
 #define _MISC_HEADER_
 #include <stdint.h>
 
+#ifdef __CUDACC__
+/*
+  if compiling to cuda
+  it's have an issue with overlapping of
+  global and __global__ keywords
+*/
+#define cuda_internal static
+#define cuda_global   static
+
+#else
+
 #define internal static
 #define global   static
-#define uchar unsigned char
-#define uint unsigned int
+
+#endif
+
+
+#define uchar    unsigned char
+#define uint     unsigned int
 #define bool32   int32_t
 #define s8       int8_t
 #define s16      int16_t
