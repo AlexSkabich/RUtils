@@ -1,8 +1,0 @@
-#include <stdio.h>
-#define _LIST_IMPLEMENTATION_
-
-
-int main(void)
-{
-  return(0);
-}
